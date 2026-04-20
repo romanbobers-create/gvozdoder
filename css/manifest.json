@@ -1,0 +1,51 @@
+{
+  "name": "Гвоздодёр | Панк-рок",
+  "short_name": "Гвоздодёр",
+  "description": "Панк-хардкор группа из Санкт-Петербурга. Музыка, концерты, мерч.",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ff3366",
+  "background_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "icons/icons8.jpg",
+      "sizes": "72x72",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons7.jpg",
+      "sizes": "96x96",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons6.jpg",
+      "sizes": "128x128",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons5.jpg",
+      "sizes": "144x144",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons4.jpg",
+      "sizes": "152x152",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons3.jpg",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons2.jpg",
+      "sizes": "384x384",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icons/icons1.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ]
+}
