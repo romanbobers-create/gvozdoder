@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: romanbobers-create/gvozdoder-punk-spb
+  repo: romanbobers-create/gvozdoder
   branch: main
   site_domain: https://gvozdoder-repo.netlify.app
 
