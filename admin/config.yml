@@ -2,7 +2,7 @@ backend:
   name: github
   repo: romanbobers-create/gvozdoder-punk-spb
   branch: main
-  base_url: https://gvozdoder-cms-auth.ваш-аккаунт.workers.dev
+  site_domain: https://gvozdoder-repo.netlify.app
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
