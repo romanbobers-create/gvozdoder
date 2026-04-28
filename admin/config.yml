@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: romanbobers-create/gvozdoder   # твой репозиторий
+  repo: romanbobers-create/gvozdoder
   base_url: https://gvozdoder.pages.dev
   auth_endpoint: api/auth
 
@@ -8,10 +8,10 @@ media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:
-  # МУЗЫКА
-  - name: "music"
-    label: "Музыка"
-    folder: "content/music"
+  # МУЗЫКА (RU)
+  - name: "music_ru"
+    label: "Музыка (RU)"
+    folder: "content/music/ru"
     create: true
     slug: "{{slug}}"
     fields:
@@ -20,11 +20,23 @@ collections:
       - {label: "Обложка", name: "cover", widget: "image", required: false}
       - {label: "Альбом", name: "album", widget: "string", required: false}
       - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
+  # МУЗЫКА (EN)
+  - name: "music_en"
+    label: "Music (EN)"
+    folder: "content/music/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Track title", name: "title", widget: "string"}
+      - {label: "Audio file", name: "audio", widget: "file"}
+      - {label: "Cover", name: "cover", widget: "image", required: false}
+      - {label: "Album", name: "album", widget: "string", required: false}
+      - {label: "Lyrics", name: "lyrics", widget: "markdown", required: false}
 
-  # КОНЦЕРТЫ
-  - name: "gigs"
-    label: "Концерты"
-    folder: "content/gigs"
+  # КОНЦЕРТЫ (RU)
+  - name: "gigs_ru"
+    label: "Концерты (RU)"
+    folder: "content/gigs/ru"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
@@ -33,35 +45,46 @@ collections:
       - {label: "Афиша", name: "poster", widget: "image"}
       - {label: "Ссылка на билеты", name: "link", widget: "string"}
       - {label: "Место проведения", name: "place", widget: "string"}
+  # КОНЦЕРТЫ (EN)
+  - name: "gigs_en"
+    label: "Gigs (EN)"
+    folder: "content/gigs/en"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Poster", name: "poster", widget: "image"}
+      - {label: "Ticket link", name: "link", widget: "string"}
+      - {label: "Venue", name: "place", widget: "string"}
 
-  # УЧАСТНИКИ
-  - name: "members"
-    label: "Участники"
-    folder: "content/members"
+  # УЧАСТНИКИ (RU) – фото статические, редактируем только текст
+  - name: "members_ru"
+    label: "Участники (RU)"
+    folder: "content/members/ru"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "Имя", name: "name", widget: "string"}
       - {label: "Роль", name: "role", widget: "string"}
-      - {label: "Фото", name: "image", widget: "image"}
+      - {label: "Фото (путь к существующему файлу)", name: "image", widget: "string", default: "/css/img/bydlo.png"}
       - {label: "Биография", name: "bio", widget: "markdown"}
-
-  # НОВОСТИ
-  - name: "news"
-    label: "Новости"
-    folder: "content/news"
+  # УЧАСТНИКИ (EN)
+  - name: "members_en"
+    label: "Members (EN)"
+    folder: "content/members/en"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
-      - {label: "Заголовок", name: "title", widget: "string"}
-      - {label: "Дата", name: "date", widget: "datetime"}
-      - {label: "Текст", name: "body", widget: "markdown"}
-      - {label: "Изображение", name: "image", widget: "image", required: false}
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Role", name: "role", widget: "string"}
+      - {label: "Photo (path to existing file)", name: "image", widget: "string", default: "/css/img/bydlo.png"}
+      - {label: "Biography", name: "bio", widget: "markdown"}
 
-  # МЕРЧ
-  - name: "shop"
-    label: "Мерч"
-    folder: "content/shop"
+  # МЕРЧ (RU)
+  - name: "shop_ru"
+    label: "Мерч (RU)"
+    folder: "content/shop/ru"
     create: true
     slug: "{{slug}}"
     fields:
@@ -69,32 +92,62 @@ collections:
       - {label: "Описание", name: "description", widget: "text"}
       - {label: "Цена", name: "price", widget: "number"}
       - {label: "Фото", name: "image", widget: "image"}
+  # МЕРЧ (EN)
+  - name: "shop_en"
+    label: "Merch (EN)"
+    folder: "content/shop/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Product title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Price", name: "price", widget: "number"}
+      - {label: "Image", name: "image", widget: "image"}
 
-  # ГАЛЕРЕЯ
-  - name: "gallery"
-    label: "Галерея"
-    folder: "content/gallery"
+  # ГАЛЕРЕЯ (RU)
+  - name: "gallery_ru"
+    label: "Галерея (RU)"
+    folder: "content/gallery/ru"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "Название альбома", name: "title", widget: "string"}
       - {label: "Фотографии", name: "images", widget: "list", field: {label: "Фото", name: "image", widget: "image"}}
+  # ГАЛЕРЕЯ (EN)
+  - name: "gallery_en"
+    label: "Gallery (EN)"
+    folder: "content/gallery/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Album title", name: "title", widget: "string"}
+      - {label: "Photos", name: "images", widget: "list", field: {label: "Photo", name: "image", widget: "image"}}
 
-  # ВИДЕО
-  - name: "video"
-    label: "Видео"
-    folder: "content/video"
+  # ВИДЕО (RU)
+  - name: "video_ru"
+    label: "Видео (RU)"
+    folder: "content/video/ru"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "Название", name: "title", widget: "string"}
       - {label: "Ссылка (YouTube/VK)", name: "url", widget: "string"}
       - {label: "Описание", name: "description", widget: "text", required: false}
+  # ВИДЕО (EN)
+  - name: "video_en"
+    label: "Video (EN)"
+    folder: "content/video/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "URL (YouTube/VK)", name: "url", widget: "string"}
+      - {label: "Description", name: "description", widget: "text", required: false}
 
-  # КАРТА ВЫСТУПЛЕНИЙ
-  - name: "map-points"
-    label: "Карта выступлений"
-    folder: "content/map"
+  # КАРТА (RU)
+  - name: "map_ru"
+    label: "Карта выступлений (RU)"
+    folder: "content/map/ru"
     create: true
     slug: "{{slug}}"
     fields:
@@ -103,5 +156,36 @@ collections:
       - {label: "Долгота", name: "lng", widget: "number", valueType: "float"}
       - {label: "Дата", name: "date", widget: "datetime"}
       - {label: "Описание", name: "description", widget: "text"}
-      - {label: "Фото", name: "image", widget: "image", required: false}
+      - {label: "Фото (опционально)", name: "image", widget: "image", required: false}
       - {label: "Ссылка на событие", name: "link", widget: "string", required: false}
+  # КАРТА (EN)
+  - name: "map_en"
+    label: "Map (EN)"
+    folder: "content/map/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Place name", name: "title", widget: "string"}
+      - {label: "Latitude", name: "lat", widget: "number", valueType: "float"}
+      - {label: "Longitude", name: "lng", widget: "number", valueType: "float"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Photo (optional)", name: "image", widget: "image", required: false}
+      - {label: "Event link", name: "link", widget: "string", required: false}
+
+  # СТРАНИЦА "О ГРУППЕ" (RU)
+  - name: "about_ru"
+    label: "О группе (RU)"
+    folder: "content/about/ru"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Текст", name: "body", widget: "markdown"}
+  # СТРАНИЦА "О ГРУППЕ" (EN)
+  - name: "about_en"
+    label: "About (EN)"
+    folder: "content/about/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Text", name: "body", widget: "markdown"}
