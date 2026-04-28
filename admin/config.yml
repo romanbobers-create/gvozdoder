@@ -1,21 +1,107 @@
 backend:
   name: github
-  repo: romanbobers-create/gvozdoder
-  branch: main # Branch to update (optional; defaults to master)
+  repo: romanbobers-create/gvozdoder   # твой репозиторий
   base_url: https://gvozdoder.pages.dev
-  auth_endpoint: /api/auth
-media_folder: static/img
-public_folder: /img
+  auth_endpoint: api/auth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
 collections:
-  - name: 'blog'
-    label: 'Blog'
-    folder: 'content/blog'
+  # МУЗЫКА
+  - name: "music"
+    label: "Музыка"
+    folder: "content/music"
     create: true
-    slug: '{{slug}}'
-    editor:
-      preview: false
+    slug: "{{slug}}"
     fields:
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-      - { label: 'Description', name: 'description', widget: 'string' }
-      - { label: 'Body', name: 'body', widget: 'markdown' }
+      - {label: "Название трека", name: "title", widget: "string"}
+      - {label: "Аудиофайл", name: "audio", widget: "file"}
+      - {label: "Обложка", name: "cover", widget: "image", required: false}
+      - {label: "Альбом", name: "album", widget: "string", required: false}
+      - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
+
+  # КОНЦЕРТЫ
+  - name: "gigs"
+    label: "Концерты"
+    folder: "content/gigs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Дата", name: "date", widget: "datetime"}
+      - {label: "Афиша", name: "poster", widget: "image"}
+      - {label: "Ссылка на билеты", name: "link", widget: "string"}
+      - {label: "Место проведения", name: "place", widget: "string"}
+
+  # УЧАСТНИКИ
+  - name: "members"
+    label: "Участники"
+    folder: "content/members"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Имя", name: "name", widget: "string"}
+      - {label: "Роль", name: "role", widget: "string"}
+      - {label: "Фото", name: "image", widget: "image"}
+      - {label: "Биография", name: "bio", widget: "markdown"}
+
+  # НОВОСТИ
+  - name: "news"
+    label: "Новости"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Заголовок", name: "title", widget: "string"}
+      - {label: "Дата", name: "date", widget: "datetime"}
+      - {label: "Текст", name: "body", widget: "markdown"}
+      - {label: "Изображение", name: "image", widget: "image", required: false}
+
+  # МЕРЧ
+  - name: "shop"
+    label: "Мерч"
+    folder: "content/shop"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Название товара", name: "title", widget: "string"}
+      - {label: "Описание", name: "description", widget: "text"}
+      - {label: "Цена", name: "price", widget: "number"}
+      - {label: "Фото", name: "image", widget: "image"}
+
+  # ГАЛЕРЕЯ
+  - name: "gallery"
+    label: "Галерея"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Название альбома", name: "title", widget: "string"}
+      - {label: "Фотографии", name: "images", widget: "list", field: {label: "Фото", name: "image", widget: "image"}}
+
+  # ВИДЕО
+  - name: "video"
+    label: "Видео"
+    folder: "content/video"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Ссылка (YouTube/VK)", name: "url", widget: "string"}
+      - {label: "Описание", name: "description", widget: "text", required: false}
+
+  # КАРТА ВЫСТУПЛЕНИЙ
+  - name: "map-points"
+    label: "Карта выступлений"
+    folder: "content/map"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Название места", name: "title", widget: "string"}
+      - {label: "Широта", name: "lat", widget: "number", valueType: "float"}
+      - {label: "Долгота", name: "lng", widget: "number", valueType: "float"}
+      - {label: "Дата", name: "date", widget: "datetime"}
+      - {label: "Описание", name: "description", widget: "text"}
+      - {label: "Фото", name: "image", widget: "image", required: false}
+      - {label: "Ссылка на событие", name: "link", widget: "string", required: false}
