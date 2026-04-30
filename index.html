@@ -320,25 +320,28 @@
         let line = lines[i];
         if (line.trim() === '') { i++; continue; }
 
-        // Определяем отступ (количество пробелов в начале)
         const leadingSpaces = line.match(/^\s*/)[0].length;
         const trimmed = line.trim();
 
         // 1) Элемент списка: начинается с "- "
         if (trimmed.startsWith('- ')) {
-            // Ищем ближайший ключ выше (строка, которая не начинается с пробелов)
-            let j = i - 1;
-            while (j >= 0 && lines[j].trim().match(/^\s/)) j--;
-            if (j >= 0) {
-                const prevLine = lines[j];
-                const colonIdx = prevLine.indexOf(':');
-                if (colonIdx !== -1) {
-                    let key = prevLine.slice(0, colonIdx).trim();
-                    if (!metadata[key]) metadata[key] = [];
-                    let val = trimmed.slice(2).trim();
-                    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
-                    metadata[key].push(val);
+            // Найти последний ключ, не являющийся элементом списка
+            let currentKey = null;
+            for (let j = i - 1; j >= 0; j--) {
+                const prevTrimmed = lines[j].trim();
+                if (prevTrimmed && !prevTrimmed.startsWith('- ') && prevTrimmed.includes(':')) {
+                    const potentialKey = prevTrimmed.split(':')[0].trim();
+                    if (potentialKey) {
+                        currentKey = potentialKey;
+                        break;
+                    }
                 }
+            }
+            if (currentKey) {
+                if (!metadata[currentKey]) metadata[currentKey] = [];
+                let val = trimmed.slice(2).trim();
+                if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
+                metadata[currentKey].push(val);
             }
             i++;
             continue;
@@ -353,7 +356,6 @@
             while (i < lines.length) {
                 const nextLine = lines[i];
                 const nextLeadingSpaces = nextLine.match(/^\s*/)[0].length;
-                // Если следующая строка имеет отступ больше, чем текущая – это часть блока
                 if (nextLeadingSpaces > leadingSpaces && nextLine.trim() !== '') {
                     multiline += nextLine.replace(/^\s{2,}/, '') + '\n';
                     i++;
@@ -371,7 +373,7 @@
             let key = line.slice(0, colonIndex).trim();
             let value = line.slice(colonIndex + 1).trim();
             if (value === '') {
-                metadata[key] = ''; // пустое значение
+                metadata[key] = '';
             } else {
                 if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
                     value = value.slice(1, -1);
@@ -381,6 +383,7 @@
         }
         i++;
     }
+
     return { metadata, body };
 }
     async function loadGigs() {
