@@ -582,21 +582,56 @@
 
     // ---------- ВИДЕО ----------
     function renderVideo(videos) {
-        const wrapper = document.getElementById('video-wrapper');
-        if (!wrapper) return;
-        wrapper.innerHTML = '';
-        if (!videos.length) { wrapper.innerHTML = '<p>Видео скоро добавятся.</p>'; return; }
-        videos.forEach(v => {
-            let embedUrl = v.url;
-            if (v.url.includes('youtube.com/watch?v=')) embedUrl = v.url.replace('watch?v=', 'embed/');
-            else if (v.url.includes('youtu.be/')) embedUrl = v.url.replace('youtu.be/', 'www.youtube.com/embed/');
-            else if (v.url.includes('vk.com/video')) embedUrl = v.url.replace('vk.com/video', 'vkvideo.ru/video_ext.php?oid=');
-            const iframe = document.createElement('iframe'); iframe.width = "560"; iframe.height = "315"; iframe.src = embedUrl; iframe.allowFullscreen = true;
-            const p = document.createElement('p'); p.innerText = v.description || '';
-            wrapper.appendChild(iframe);
-            wrapper.appendChild(p);
-        });
+    const wrapper = document.getElementById('video-wrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+    if (!videos || !videos.length) {
+        wrapper.innerHTML = '<p>Видео скоро добавятся.</p>';
+        return;
     }
+    videos.forEach(v => {
+        // Проверяем, есть ли URL
+        if (!v || !v.url) {
+            console.warn('Видео без ссылки:', v);
+            return;
+        }
+        let embedUrl = v.url;
+        // Обработка ссылок YouTube
+        if (embedUrl.includes('youtube.com/watch?v=')) {
+            embedUrl = embedUrl.replace('watch?v=', 'embed/');
+        } else if (embedUrl.includes('youtu.be/')) {
+            const videoId = embedUrl.split('youtu.be/')[1].split('?')[0];
+            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        } else if (embedUrl.includes('vk.com/video')) {
+            // Если ссылка на страницу ВК, преобразуем в iframe-ссылку
+            // Формат: https://vk.com/video-117535268_456239169
+            const matches = embedUrl.match(/video(-?\d+)_(\d+)/);
+            if (matches) {
+                embedUrl = `https://vk.com/video_ext.php?oid=${matches[1]}&id=${matches[2]}&hd=2`;
+            } else {
+                // Если уже готовый iframe-код, не трогаем
+                // (но лучше хранить готовый iframe в отдельном поле)
+            }
+        }
+        // Создаём iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.width = "560";
+        iframe.height = "315";
+        iframe.allowFullscreen = true;
+        iframe.setAttribute('allow', 'autoplay; encrypted-media; fullscreen; picture-in-picture');
+        iframe.style.border = "none";
+        iframe.style.borderRadius = "15px";
+        wrapper.appendChild(iframe);
+        
+        // Если есть описание
+        if (v.description) {
+            const desc = document.createElement('p');
+            desc.innerText = v.description;
+            wrapper.appendChild(desc);
+        }
+    });
+}
 
     // ---------- КАРТА ----------
     function renderMap(points) {
