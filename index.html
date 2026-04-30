@@ -87,6 +87,7 @@
         .close-modal { position: absolute; top: 10px; right: 20px; font-size: 2rem; color: #ff3366; cursor: pointer; }
         .modal-body { padding: 30px 20px; text-align: center; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
 </head>
 <body>
 
@@ -309,82 +310,19 @@
     const frontMatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
     const match = md.match(frontMatterRegex);
     if (!match) return { metadata: {}, body: md };
-
+    
     const yamlContent = match[1];
     const body = match[2];
-    const metadata = {};
-
-    const lines = yamlContent.split('\n');
-    let i = 0;
-    while (i < lines.length) {
-        let line = lines[i];
-        if (line.trim() === '') { i++; continue; }
-
-        const leadingSpaces = line.match(/^\s*/)[0].length;
-        const trimmed = line.trim();
-
-        // 1) Элемент списка: начинается с "- "
-        if (trimmed.startsWith('- ')) {
-            // Найти последний ключ, не являющийся элементом списка
-            let currentKey = null;
-            for (let j = i - 1; j >= 0; j--) {
-                const prevTrimmed = lines[j].trim();
-                if (prevTrimmed && !prevTrimmed.startsWith('- ') && prevTrimmed.includes(':')) {
-                    const potentialKey = prevTrimmed.split(':')[0].trim();
-                    if (potentialKey) {
-                        currentKey = potentialKey;
-                        break;
-                    }
-                }
-            }
-            if (currentKey) {
-                if (!metadata[currentKey]) metadata[currentKey] = [];
-                let val = trimmed.slice(2).trim();
-                if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
-                metadata[currentKey].push(val);
-            }
-            i++;
-            continue;
-        }
-
-        // 2) Многострочный блок (ключ: | или ключ: |-)
-        const blockMatch = line.match(/^(\w+):\s*(\|-?)\s*$/);
-        if (blockMatch) {
-            const key = blockMatch[1];
-            let multiline = '';
-            i++;
-            while (i < lines.length) {
-                const nextLine = lines[i];
-                const nextLeadingSpaces = nextLine.match(/^\s*/)[0].length;
-                if (nextLeadingSpaces > leadingSpaces && nextLine.trim() !== '') {
-                    multiline += nextLine.replace(/^\s{2,}/, '') + '\n';
-                    i++;
-                } else {
-                    break;
-                }
-            }
-            metadata[key] = multiline.trimEnd();
-            continue;
-        }
-
-        // 3) Обычное поле ключ: значение
-        const colonIndex = line.indexOf(':');
-        if (colonIndex !== -1) {
-            let key = line.slice(0, colonIndex).trim();
-            let value = line.slice(colonIndex + 1).trim();
-            if (value === '') {
-                metadata[key] = '';
-            } else {
-                if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
-                    value = value.slice(1, -1);
-                }
-                metadata[key] = value;
-            }
-        }
-        i++;
+    
+    try {
+        const metadata = jsyaml.load(yamlContent);
+        // jsyaml может вернуть null или пустой объект
+        return { metadata: metadata || {}, body };
+    } catch (e) {
+        console.warn('YAML parse error', e);
+        // fallback: попробуем старый парсер (необязательно)
+        return { metadata: {}, body };
     }
-
-    return { metadata, body };
 }
     async function loadGigs() {
         const gigs = await fetchCollection('gigs');
