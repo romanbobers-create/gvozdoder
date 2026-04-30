@@ -6,7 +6,7 @@ backend:
   auth_endpoint: api/auth
 
 media_folder: "public/uploads"
-public_folder: "/uploads/uploads"
+public_folder: "/public/uploads"
 
 collections:
   # МУЗЫКА (RU)
