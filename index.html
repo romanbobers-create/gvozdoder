@@ -306,21 +306,50 @@
     }
 
     function parseMarkdown(md) {
-        const match = md.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-        if (!match) return { metadata: {}, body: md };
-        const yaml = match[1], body = match[2];
-        const metadata = {};
-        yaml.split('\n').forEach(line => {
-            const idx = line.indexOf(':');
-            if (idx !== -1) {
-                let key = line.slice(0, idx).trim();
-                let val = line.slice(idx+1).trim();
-                if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1,-1);
-                metadata[key] = val;
+    const frontMatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
+    const match = md.match(frontMatterRegex);
+    if (!match) return { metadata: {}, body: md };
+    
+    const yamlContent = match[1];
+    const body = match[2];
+    const metadata = {};
+    
+    // Разбираем YAML построчно с поддержкой массивов
+    const lines = yamlContent.split('\n');
+    let currentKey = null;
+    let currentArray = null;
+    
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        if (line.trim() === '') continue;
+        
+        // Проверка на элемент списка (начинается с пробелов и дефиса)
+        const listMatch = line.match(/^\s+-\s+(.*)$/);
+        if (listMatch && currentKey) {
+            // Добавляем элемент в массив
+            if (!metadata[currentKey]) metadata[currentKey] = [];
+            metadata[currentKey].push(listMatch[1].trim());
+            continue;
+        }
+        
+        // Обычное поле ключ: значение
+        const colonIndex = line.indexOf(':');
+        if (colonIndex !== -1) {
+            currentKey = line.slice(0, colonIndex).trim();
+            let value = line.slice(colonIndex + 1).trim();
+            // Если значение пустое, возможно, дальше будет список
+            if (value === '') {
+                metadata[currentKey] = []; // подготовим массив
+            } else {
+                // Если значение начинается с кавычек — убираем их
+                if (value.startsWith('"') && value.endsWith('"')) value = value.slice(1, -1);
+                metadata[currentKey] = value;
             }
-        });
-        return { metadata, body };
+        }
     }
+    
+    return { metadata, body };
+}
 
     async function loadGigs() {
         const gigs = await fetchCollection('gigs');
