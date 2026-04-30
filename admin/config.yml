@@ -125,15 +125,16 @@ collections:
       - {label: "Photos", name: "images", widget: "list", field: {label: "Photo", name: "image", widget: "image"}}
 
   # ВИДЕО (RU)
-  - name: "video_ru"
-    label: "Видео (RU)"
-    folder: "content/video/ru"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Название", name: "title", widget: "string"}
-      - {label: "Код видео (iframe)", name: "embed_code", widget: "text"}
-      - {label: "Описание", name: "description", widget: "text", required: false}
+ # ВАРИАНТ 1: iframe-код
+- name: "video_ru"
+  label: "Видео (RU)"
+  folder: "content/video/ru"
+  create: true
+  slug: "{{slug}}"
+  fields:
+    - {label: "Название", name: "title", widget: "string"}
+    - {label: "Код для вставки (iframe)", name: "embed_code", widget: "text", hint: "Скопируйте полный iframe из ВК или YouTube"}
+    - {label: "Описание", name: "description", widget: "text", required: false}
   # ВИДЕО (EN)
   - name: "video_en"
     label: "Video (EN)"
