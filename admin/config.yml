@@ -5,8 +5,8 @@ backend:
   base_url: https://gvozdoder.pages.dev
   auth_endpoint: api/auth
 
-media_folder: "public/uploads"
-public_folder: "/public/uploads"
+media_folder: "uploads"
+public_folder: "/uploads"
 
 collections:
   # МУЗЫКА (RU)
