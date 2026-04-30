@@ -314,21 +314,35 @@
     const body = match[2];
     const metadata = {};
     
-    // Разбираем YAML построчно с поддержкой массивов
+    // Разбиваем на строки и обрабатываем
     const lines = yamlContent.split('\n');
     let currentKey = null;
-    let currentArray = null;
+    let currentMultiline = null;
     
     for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
         if (line.trim() === '') continue;
         
-        // Проверка на элемент списка (начинается с пробелов и дефиса)
-        const listMatch = line.match(/^\s+-\s+(.*)$/);
-        if (listMatch && currentKey) {
-            // Добавляем элемент в массив
-            if (!metadata[currentKey]) metadata[currentKey] = [];
-            metadata[currentKey].push(listMatch[1].trim());
+        // Определяем, является ли строка продолжением многострочного блока (начинается с пробелов)
+        const isMultilineContinuation = currentMultiline !== null && line.match(/^\s+/);
+        if (isMultilineContinuation) {
+            // Убираем первые 2 пробела (YAML отступ) и добавляем перенос
+            currentMultiline += line.replace(/^\s+/, '') + '\n';
+            continue;
+        }
+        
+        // Если мы были в многострочном блоке и он закончился — сохраняем
+        if (currentMultiline !== null) {
+            metadata[currentKey] = currentMultiline.trimEnd();
+            currentMultiline = null;
+            currentKey = null;
+        }
+        
+        // Проверяем на начало блока с | или |-
+        const blockMatch = line.match(/^(\w+):\s*\|-?\s*$/);
+        if (blockMatch) {
+            currentKey = blockMatch[1];
+            currentMultiline = '';
             continue;
         }
         
@@ -337,20 +351,25 @@
         if (colonIndex !== -1) {
             currentKey = line.slice(0, colonIndex).trim();
             let value = line.slice(colonIndex + 1).trim();
-            // Если значение пустое, возможно, дальше будет список
+            // Если значение пустое — возможно, дальше будет список или блок
             if (value === '') {
-                metadata[currentKey] = []; // подготовим массив
+                // Ничего не делаем, возможно следующий элемент списка
+                continue;
             } else {
-                // Если значение начинается с кавычек — убираем их
                 if (value.startsWith('"') && value.endsWith('"')) value = value.slice(1, -1);
                 metadata[currentKey] = value;
+                currentKey = null;
             }
         }
     }
     
+    // Если после цикла остался многострочный блок
+    if (currentMultiline !== null) {
+        metadata[currentKey] = currentMultiline.trimEnd();
+    }
+    
     return { metadata, body };
 }
-
     async function loadGigs() {
         const gigs = await fetchCollection('gigs');
         return gigs.map(g => ({ ...g, dateObj: new Date(g.date) })).sort((a,b) => a.dateObj - b.dateObj);
