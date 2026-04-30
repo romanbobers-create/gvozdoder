@@ -132,7 +132,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Название", name: "title", widget: "string"}
-      - {label: "Ссылка (YouTube/VK)", name: "url", widget: "string"}
+      - {label: "Код видео (iframe)", name: "embed_code", widget: "text"}
       - {label: "Описание", name: "description", widget: "text", required: false}
   # ВИДЕО (EN)
   - name: "video_en"
