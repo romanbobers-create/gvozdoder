@@ -1,6 +1,7 @@
 backend:
   name: github
   repo: romanbobers-create/gvozdoder
+  branch: main
   base_url: https://gvozdoder.pages.dev
   auth_endpoint: api/auth
 
