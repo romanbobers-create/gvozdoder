@@ -309,65 +309,78 @@
     const frontMatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
     const match = md.match(frontMatterRegex);
     if (!match) return { metadata: {}, body: md };
-    
+
     const yamlContent = match[1];
     const body = match[2];
     const metadata = {};
-    
-    // Разбиваем на строки и обрабатываем
+
     const lines = yamlContent.split('\n');
-    let currentKey = null;
-    let currentMultiline = null;
-    
-    for (let i = 0; i < lines.length; i++) {
+    let i = 0;
+    while (i < lines.length) {
         let line = lines[i];
-        if (line.trim() === '') continue;
-        
-        // Определяем, является ли строка продолжением многострочного блока (начинается с пробелов)
-        const isMultilineContinuation = currentMultiline !== null && line.match(/^\s+/);
-        if (isMultilineContinuation) {
-            // Убираем первые 2 пробела (YAML отступ) и добавляем перенос
-            currentMultiline += line.replace(/^\s+/, '') + '\n';
+        if (line.trim() === '') { i++; continue; }
+
+        // Определяем отступ (количество пробелов в начале)
+        const leadingSpaces = line.match(/^\s*/)[0].length;
+        const trimmed = line.trim();
+
+        // 1) Элемент списка: начинается с "- "
+        if (trimmed.startsWith('- ')) {
+            // Ищем ближайший ключ выше (строка, которая не начинается с пробелов)
+            let j = i - 1;
+            while (j >= 0 && lines[j].trim().match(/^\s/)) j--;
+            if (j >= 0) {
+                const prevLine = lines[j];
+                const colonIdx = prevLine.indexOf(':');
+                if (colonIdx !== -1) {
+                    let key = prevLine.slice(0, colonIdx).trim();
+                    if (!metadata[key]) metadata[key] = [];
+                    let val = trimmed.slice(2).trim();
+                    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
+                    metadata[key].push(val);
+                }
+            }
+            i++;
             continue;
         }
-        
-        // Если мы были в многострочном блоке и он закончился — сохраняем
-        if (currentMultiline !== null) {
-            metadata[currentKey] = currentMultiline.trimEnd();
-            currentMultiline = null;
-            currentKey = null;
-        }
-        
-        // Проверяем на начало блока с | или |-
-        const blockMatch = line.match(/^(\w+):\s*\|-?\s*$/);
+
+        // 2) Многострочный блок (ключ: | или ключ: |-)
+        const blockMatch = line.match(/^(\w+):\s*(\|-?)\s*$/);
         if (blockMatch) {
-            currentKey = blockMatch[1];
-            currentMultiline = '';
+            const key = blockMatch[1];
+            let multiline = '';
+            i++;
+            while (i < lines.length) {
+                const nextLine = lines[i];
+                const nextLeadingSpaces = nextLine.match(/^\s*/)[0].length;
+                // Если следующая строка имеет отступ больше, чем текущая – это часть блока
+                if (nextLeadingSpaces > leadingSpaces && nextLine.trim() !== '') {
+                    multiline += nextLine.replace(/^\s{2,}/, '') + '\n';
+                    i++;
+                } else {
+                    break;
+                }
+            }
+            metadata[key] = multiline.trimEnd();
             continue;
         }
-        
-        // Обычное поле ключ: значение
+
+        // 3) Обычное поле ключ: значение
         const colonIndex = line.indexOf(':');
         if (colonIndex !== -1) {
-            currentKey = line.slice(0, colonIndex).trim();
+            let key = line.slice(0, colonIndex).trim();
             let value = line.slice(colonIndex + 1).trim();
-            // Если значение пустое — возможно, дальше будет список или блок
             if (value === '') {
-                // Ничего не делаем, возможно следующий элемент списка
-                continue;
+                metadata[key] = ''; // пустое значение
             } else {
-                if (value.startsWith('"') && value.endsWith('"')) value = value.slice(1, -1);
-                metadata[currentKey] = value;
-                currentKey = null;
+                if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+                    value = value.slice(1, -1);
+                }
+                metadata[key] = value;
             }
         }
+        i++;
     }
-    
-    // Если после цикла остался многострочный блок
-    if (currentMultiline !== null) {
-        metadata[currentKey] = currentMultiline.trimEnd();
-    }
-    
     return { metadata, body };
 }
     async function loadGigs() {
