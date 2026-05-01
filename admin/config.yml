@@ -11,17 +11,18 @@ public_folder: "/uploads"
 collections:
   # МУЗЫКА (общая)
   - name: "music"
-    label: "Музыка"
-    folder: "content/music"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Название трека", name: "title", widget: "string"}
-      - {label: "Аудиофайл", name: "audio", widget: "file"}
-      - {label: "Обложка", name: "cover", widget: "image", required: false}
-      - {label: "Альбом", name: "album", widget: "string", required: false}
-      - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
-
+  label: "Музыка"
+  folder: "content/music"
+  create: true
+  slug: "{{slug}}"
+  media_folder: "uploads/music"      # папка для аудиофайлов (относительно корня репозитория)
+  public_folder: "/uploads/music"    # публичный URL
+  fields:
+    - {label: "Название трека", name: "title", widget: "string"}
+    - {label: "Аудиофайл", name: "audio", widget: "file", media_library: { config: { max_file_size: 10485760 } }}
+    - {label: "Обложка", name: "cover", widget: "image", required: false}
+    - {label: "Альбом", name: "album", widget: "string", required: false}
+    - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
   # КОНЦЕРТЫ (общие)
   - name: "gigs"
     label: "Концерты"
