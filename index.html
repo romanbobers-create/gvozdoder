@@ -196,35 +196,36 @@
         }
     };
     function applyStaticTranslations() {
-        const t = translations[currentLang];
-        document.getElementById('nav-about').innerText = t.nav_about;
-        document.getElementById('nav-music').innerText = t.nav_music;
-        document.getElementById('nav-gigs').innerText = t.nav_gigs;
-        document.getElementById('nav-members').innerText = t.nav_members;
-        document.getElementById('nav-gallery').innerText = t.nav_gallery;
-        document.getElementById('nav-video').innerText = t.nav_video;
-        document.getElementById('nav-shop').innerText = t.nav_shop;
-        document.getElementById('nav-map').innerText = t.nav_map;
-        document.getElementById('nav-contacts').innerText = t.nav_contacts;
-        document.getElementById('music-title').innerText = t.music_title;
-        document.getElementById('about-title').innerText = t.about_title;
-        document.getElementById('members-title').innerText = t.members_title;
-        document.getElementById('gigs-title').innerText = t.gigs_title;
-        document.getElementById('gallery-title').innerText = t.gallery_title;
-        document.getElementById('video-title').innerText = t.video_title;
-        document.getElementById('shop-title').innerText = t.shop_title;
-        document.getElementById('map-title').innerText = t.map_title;
-        document.getElementById('bot-header').innerText = t.bot_header;
-        document.getElementById('bot-welcome').innerText = t.bot_welcome;
-        document.getElementById('bot-q-concert').innerText = t.bot_q_concert;
-        document.getElementById('bot-q-tickets').innerText = t.bot_q_tickets;
-        document.getElementById('bot-q-music').innerText = t.bot_q_music;
-        document.getElementById('bot-q-members').innerText = t.bot_q_members;
-        document.getElementById('bot-q-fanclub').innerText = t.bot_q_fanclub;
-        document.getElementById('botQuestionInput').placeholder = t.bot_placeholder;
-        document.getElementById('sendBotQuestion').innerText = t.bot_send;
-    }
-
+    const t = translations[currentLang];
+    if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.nav_about;
+    if (document.getElementById('nav-music')) document.getElementById('nav-music').innerText = t.nav_music;
+    if (document.getElementById('nav-gigs')) document.getElementById('nav-gigs').innerText = t.nav_gigs;
+    if (document.getElementById('nav-members')) document.getElementById('nav-members').innerText = t.nav_members;
+    if (document.getElementById('nav-gallery')) document.getElementById('nav-gallery').innerText = t.nav_gallery;
+    if (document.getElementById('nav-video')) document.getElementById('nav-video').innerText = t.nav_video;
+    if (document.getElementById('nav-shop')) document.getElementById('nav-shop').innerText = t.nav_shop;
+    if (document.getElementById('nav-map')) document.getElementById('nav-map').innerText = t.nav_map;
+    if (document.getElementById('nav-contacts')) document.getElementById('nav-contacts').innerText = t.nav_contacts;
+    
+    if (document.getElementById('music-title')) document.getElementById('music-title').innerText = t.music_title;
+    if (document.getElementById('about-title')) document.getElementById('about-title').innerText = t.about_title;
+    if (document.getElementById('members-title')) document.getElementById('members-title').innerText = t.members_title;
+    if (document.getElementById('gigs-title')) document.getElementById('gigs-title').innerText = t.gigs_title;
+    if (document.getElementById('gallery-title')) document.getElementById('gallery-title').innerText = t.gallery_title;
+    if (document.getElementById('video-title')) document.getElementById('video-title').innerText = t.video_title;
+    if (document.getElementById('shop-title')) document.getElementById('shop-title').innerText = t.shop_title;
+    if (document.getElementById('map-title')) document.getElementById('map-title').innerText = t.map_title;
+    
+    if (document.getElementById('bot-header')) document.getElementById('bot-header').innerText = t.bot_header;
+    if (document.getElementById('bot-welcome')) document.getElementById('bot-welcome').innerText = t.bot_welcome;
+    if (document.getElementById('bot-q-concert')) document.getElementById('bot-q-concert').innerText = t.bot_q_concert;
+    if (document.getElementById('bot-q-tickets')) document.getElementById('bot-q-tickets').innerText = t.bot_q_tickets;
+    if (document.getElementById('bot-q-music')) document.getElementById('bot-q-music').innerText = t.bot_q_music;
+    if (document.getElementById('bot-q-members')) document.getElementById('bot-q-members').innerText = t.bot_q_members;
+    if (document.getElementById('bot-q-fanclub')) document.getElementById('bot-q-fanclub').innerText = t.bot_q_fanclub;
+    if (document.getElementById('botQuestionInput')) document.getElementById('botQuestionInput').placeholder = t.bot_placeholder;
+    if (document.getElementById('sendBotQuestion')) document.getElementById('sendBotQuestion').innerText = t.bot_send;
+}
     // ======================== ЗАГРУЗКА С GITHUB ========================
     async function fetchCollection(collection) {
         let folder = collection;
