@@ -185,35 +185,29 @@
 
     // ======================== ПЕРЕВОДЫ СТАТИКИ ========================
     const translations = {
-        ru: { nav_about:"О группе", nav_music:"Музыка", nav_gigs:"Концерты", nav_members:"Участники",
-            nav_gallery:"Галерея", nav_video:"Видео", nav_shop:"Мерч", nav_map:"Карта", nav_contacts:"Контакты",
-            music_title:"Музыка", about_title:"О нас", members_title:"Участники", gigs_title:"Концерты",
-            gallery_title:"Галерея", video_title:"Видео", shop_title:"Панк-мерч", map_title:"Карта выступлений",
-            bot_header:"🤘 Панк-бот FAQ", bot_welcome:"Панк-бот на связи. Чего тебе надо?",
-            bot_q_concert:"Когда концерт?", bot_q_tickets:"Как купить билеты?", bot_q_music:"Где послушать?",
-            bot_q_members:"Состав группы?", bot_q_fanclub:"Вступить в фан-клуб", bot_placeholder:"Напиши свой вопрос...", bot_send:"Спросить"
-        },
-        en: { nav_about:"About", nav_music:"Music", nav_gigs:"Gigs", nav_members:"Members",
-            nav_gallery:"Gallery", nav_video:"Video", nav_shop:"Merch", nav_map:"Map", nav_contacts:"Contacts",
-            music_title:"Music", about_title:"About", members_title:"Members", gigs_title:"Gigs",
-            gallery_title:"Gallery", video_title:"Video", shop_title:"Punk merch", map_title:"Gig map",
-            bot_header:"🤘 Punk bot", bot_welcome:"Punk bot online. What do you want?",
-            bot_q_concert:"Next gig?", bot_q_tickets:"Buy tickets?", bot_q_music:"Listen to music?",
-            bot_q_members:"Band lineup?", bot_q_fanclub:"Join fan club", bot_placeholder:"Type your question...", bot_send:"Ask"
-        }
-        ru: {
-    // ... остальные поля
-    nav_news: "Новости",
-    news_title: "Новости",
-    // ...
-},
-en: {
-    // ...
-    nav_news: "News",
-    news_title: "News",
-    // ...
-}
-    };
+    ru: {
+        nav_about: "О группе", nav_music: "Музыка", nav_gigs: "Концерты", nav_members: "Участники",
+        nav_gallery: "Галерея", nav_video: "Видео", nav_shop: "Мерч", nav_map: "Карта", nav_contacts: "Контакты",
+        nav_news: "Новости",   // ← добавили
+        music_title: "Музыка", about_title: "О нас", members_title: "Участники", gigs_title: "Концерты",
+        gallery_title: "Галерея", video_title: "Видео", shop_title: "Панк-мерч", map_title: "Карта выступлений",
+        news_title: "Новости",  // ← добавили
+        bot_header: "🤘 Панк-бот FAQ", bot_welcome: "Панк-бот на связи. Чего тебе надо?",
+        bot_q_concert: "Когда концерт?", bot_q_tickets: "Как купить билеты?", bot_q_music: "Где послушать?",
+        bot_q_members: "Состав группы?", bot_q_fanclub: "Вступить в фан-клуб", bot_placeholder: "Напиши свой вопрос...", bot_send: "Спросить"
+    },
+    en: {
+        nav_about: "About", nav_music: "Music", nav_gigs: "Gigs", nav_members: "Members",
+        nav_gallery: "Gallery", nav_video: "Video", nav_shop: "Merch", nav_map: "Map", nav_contacts: "Contacts",
+        nav_news: "News",   // ← добавили
+        music_title: "Music", about_title: "About", members_title: "Members", gigs_title: "Gigs",
+        gallery_title: "Gallery", video_title: "Video", shop_title: "Punk merch", map_title: "Gig map",
+        news_title: "News",  // ← добавили
+        bot_header: "🤘 Punk bot", bot_welcome: "Punk bot online. What do you want?",
+        bot_q_concert: "Next gig?", bot_q_tickets: "Buy tickets?", bot_q_music: "Listen to music?",
+        bot_q_members: "Band lineup?", bot_q_fanclub: "Join fan club", bot_placeholder: "Type your question...", bot_send: "Ask"
+    }
+};
     function applyStaticTranslations() {
     const t = translations[currentLang];
     if (document.getElementById('nav-about')) document.getElementById('nav-about').innerText = t.nav_about;
@@ -225,6 +219,7 @@ en: {
     if (document.getElementById('nav-shop')) document.getElementById('nav-shop').innerText = t.nav_shop;
     if (document.getElementById('nav-map')) document.getElementById('nav-map').innerText = t.nav_map;
     if (document.getElementById('nav-contacts')) document.getElementById('nav-contacts').innerText = t.nav_contacts;
+    if (document.getElementById('nav-news')) document.getElementById('nav-news').innerText = t.nav_news;
     
     if (document.getElementById('music-title')) document.getElementById('music-title').innerText = t.music_title;
     if (document.getElementById('about-title')) document.getElementById('about-title').innerText = t.about_title;
@@ -232,10 +227,9 @@ en: {
     if (document.getElementById('gigs-title')) document.getElementById('gigs-title').innerText = t.gigs_title;
     if (document.getElementById('gallery-title')) document.getElementById('gallery-title').innerText = t.gallery_title;
     if (document.getElementById('video-title')) document.getElementById('video-title').innerText = t.video_title;
-        if (document.getElementById('nav-news')) document.getElementById('nav-news').innerText = t.nav_news;
-if (document.getElementById('news-title')) document.getElementById('news-title').innerText = t.news_title;
     if (document.getElementById('shop-title')) document.getElementById('shop-title').innerText = t.shop_title;
     if (document.getElementById('map-title')) document.getElementById('map-title').innerText = t.map_title;
+    if (document.getElementById('news-title')) document.getElementById('news-title').innerText = t.news_title;
     
     if (document.getElementById('bot-header')) document.getElementById('bot-header').innerText = t.bot_header;
     if (document.getElementById('bot-welcome')) document.getElementById('bot-welcome').innerText = t.bot_welcome;
