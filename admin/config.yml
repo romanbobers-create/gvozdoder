@@ -9,10 +9,10 @@ media_folder: "uploads"
 public_folder: "/uploads"
 
 collections:
-  # МУЗЫКА (RU)
-  - name: "music_ru"
-    label: "Музыка (RU)"
-    folder: "content/music/ru"
+  # МУЗЫКА (общая)
+  - name: "music"
+    label: "Музыка"
+    folder: "content/music"
     create: true
     slug: "{{slug}}"
     fields:
@@ -21,23 +21,11 @@ collections:
       - {label: "Обложка", name: "cover", widget: "image", required: false}
       - {label: "Альбом", name: "album", widget: "string", required: false}
       - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
-  # МУЗЫКА (EN)
-  - name: "music_en"
-    label: "Music (EN)"
-    folder: "content/music/en"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Track title", name: "title", widget: "string"}
-      - {label: "Audio file", name: "audio", widget: "file"}
-      - {label: "Cover", name: "cover", widget: "image", required: false}
-      - {label: "Album", name: "album", widget: "string", required: false}
-      - {label: "Lyrics", name: "lyrics", widget: "markdown", required: false}
 
-  # КОНЦЕРТЫ (RU)
-  - name: "gigs_ru"
-    label: "Концерты (RU)"
-    folder: "content/gigs/ru"
+  # КОНЦЕРТЫ (общие)
+  - name: "gigs"
+    label: "Концерты"
+    folder: "content/gigs"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
@@ -46,20 +34,8 @@ collections:
       - {label: "Афиша", name: "poster", widget: "image"}
       - {label: "Ссылка на билеты", name: "link", widget: "string"}
       - {label: "Место проведения", name: "place", widget: "string"}
-  # КОНЦЕРТЫ (EN)
-  - name: "gigs_en"
-    label: "Gigs (EN)"
-    folder: "content/gigs/en"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Poster", name: "poster", widget: "image"}
-      - {label: "Ticket link", name: "link", widget: "string"}
-      - {label: "Venue", name: "place", widget: "string"}
 
-  # УЧАСТНИКИ (RU) – фото статические, редактируем только текст
+  # УЧАСТНИКИ (с языком)
   - name: "members_ru"
     label: "Участники (RU)"
     folder: "content/members/ru"
@@ -68,9 +44,8 @@ collections:
     fields:
       - {label: "Имя", name: "name", widget: "string"}
       - {label: "Роль", name: "role", widget: "string"}
-      - {label: "Фото (путь к существующему файлу)", name: "image", widget: "string", default: "/css/img/bydlo.png"}
+      - {label: "Фото", name: "image", widget: "string", default: "/css/img/bydlo.png"}
       - {label: "Биография", name: "bio", widget: "markdown"}
-  # УЧАСТНИКИ (EN)
   - name: "members_en"
     label: "Members (EN)"
     folder: "content/members/en"
@@ -79,13 +54,13 @@ collections:
     fields:
       - {label: "Name", name: "name", widget: "string"}
       - {label: "Role", name: "role", widget: "string"}
-      - {label: "Photo (path to existing file)", name: "image", widget: "string", default: "/css/img/bydlo.png"}
+      - {label: "Photo", name: "image", widget: "string", default: "/css/img/bydlo.png"}
       - {label: "Biography", name: "bio", widget: "markdown"}
 
-  # МЕРЧ (RU)
-  - name: "shop_ru"
-    label: "Мерч (RU)"
-    folder: "content/shop/ru"
+  # МЕРЧ (общий)
+  - name: "shop"
+    label: "Мерч"
+    folder: "content/shop"
     create: true
     slug: "{{slug}}"
     fields:
@@ -93,62 +68,36 @@ collections:
       - {label: "Описание", name: "description", widget: "text"}
       - {label: "Цена", name: "price", widget: "number"}
       - {label: "Фото", name: "image", widget: "image"}
-  # МЕРЧ (EN)
-  - name: "shop_en"
-    label: "Merch (EN)"
-    folder: "content/shop/en"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Product title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Price", name: "price", widget: "number"}
-      - {label: "Image", name: "image", widget: "image"}
 
-  # ГАЛЕРЕЯ (RU)
-  - name: "gallery_ru"
-    label: "Галерея (RU)"
-    folder: "content/gallery/ru"
+  # ГАЛЕРЕЯ (общая)
+  - name: "gallery"
+    label: "Галерея"
+    folder: "content/gallery"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "Название альбома", name: "title", widget: "string"}
       - {label: "Фотографии", name: "images", widget: "list", field: {label: "Фото", name: "image", widget: "image"}}
-  # ГАЛЕРЕЯ (EN)
-  - name: "gallery_en"
-    label: "Gallery (EN)"
-    folder: "content/gallery/en"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Album title", name: "title", widget: "string"}
-      - {label: "Photos", name: "images", widget: "list", field: {label: "Photo", name: "image", widget: "image"}}
 
-  # ВИДЕО (RU) – используем embed_code
-  - name: "video_ru"
-    label: "Видео (RU)"
-    folder: "content/video/ru"
+  # ВИДЕО (категории – реализовано через список видео внутри категорий)
+  - name: "video_categories"
+    label: "Категории видео"
+    folder: "content/video_categories"
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Название", name: "title", widget: "string"}
-      - {label: "Код для вставки (iframe)", name: "embed_code", widget: "text", hint: "Скопируйте полный iframe из ВК или YouTube"}
-      - {label: "Описание", name: "description", widget: "text", required: false}
-  # ВИДЕО (EN)
-  - name: "video_en"
-    label: "Video (EN)"
-    folder: "content/video/en"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Embed code (iframe)", name: "embed_code", widget: "text", hint: "Copy full iframe from VK or YouTube"}
-      - {label: "Description", name: "description", widget: "text", required: false}
+      - {label: "Название категории", name: "title", widget: "string"}
+      - {label: "Видео", name: "videos", widget: "list", 
+         fields: 
+           - {label: "Название видео", name: "video_title", widget: "string"}
+           - {label: "Код для вставки (iframe)", name: "embed_code", widget: "text"}
+           - {label: "Описание", name: "description", widget: "text", required: false}
+        }
 
-  # КАРТА (RU)
-  - name: "map_ru"
-    label: "Карта выступлений (RU)"
-    folder: "content/map/ru"
+  # КАРТА (общая)
+  - name: "map"
+    label: "Карта выступлений"
+    folder: "content/map"
     create: true
     slug: "{{slug}}"
     fields:
@@ -157,24 +106,32 @@ collections:
       - {label: "Долгота", name: "lng", widget: "number", value_type: "float"}
       - {label: "Дата", name: "date", widget: "datetime"}
       - {label: "Описание", name: "description", widget: "text"}
-      - {label: "Фото (опционально)", name: "image", widget: "image", required: false}
+      - {label: "Фото", name: "image", widget: "image", required: false}
       - {label: "Ссылка на событие", name: "link", widget: "string", required: false}
-  # КАРТА (EN)
-  - name: "map_en"
-    label: "Map (EN)"
-    folder: "content/map/en"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Place name", name: "title", widget: "string"}
-      - {label: "Latitude", name: "lat", widget: "number", value_type: "float"}
-      - {label: "Longitude", name: "lng", widget: "number", value_type: "float"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Photo (optional)", name: "image", widget: "image", required: false}
-      - {label: "Event link", name: "link", widget: "string", required: false}
 
-  # СТРАНИЦА "О ГРУППЕ" (RU)
+  # НОВОСТИ (с языком)
+  - name: "news_ru"
+    label: "Новости (RU)"
+    folder: "content/news/ru"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Заголовок", name: "title", widget: "string"}
+      - {label: "Дата", name: "date", widget: "datetime"}
+      - {label: "Текст", name: "body", widget: "markdown"}
+      - {label: "Изображение", name: "image", widget: "image", required: false}
+  - name: "news_en"
+    label: "News (EN)"
+    folder: "content/news/en"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Image", name: "image", widget: "image", required: false}
+
+  # СТРАНИЦА "О ГРУППЕ" (с языком)
   - name: "about_ru"
     label: "О группе (RU)"
     folder: "content/about/ru"
@@ -182,7 +139,6 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Текст", name: "body", widget: "markdown"}
-  # СТРАНИЦА "О ГРУППЕ" (EN)
   - name: "about_en"
     label: "About (EN)"
     folder: "content/about/en"
