@@ -35,7 +35,7 @@ collections:
       - {label: "Ссылка на билеты", name: "link", widget: "string"}
       - {label: "Место проведения", name: "place", widget: "string"}
 
-  # УЧАСТНИКИ (с языком)
+  # УЧАСТНИКИ (RU)
   - name: "members_ru"
     label: "Участники (RU)"
     folder: "content/members/ru"
@@ -46,6 +46,8 @@ collections:
       - {label: "Роль", name: "role", widget: "string"}
       - {label: "Фото", name: "image", widget: "string", default: "/css/img/bydlo.png"}
       - {label: "Биография", name: "bio", widget: "markdown"}
+
+  # УЧАСТНИКИ (EN)
   - name: "members_en"
     label: "Members (EN)"
     folder: "content/members/en"
@@ -79,20 +81,30 @@ collections:
       - {label: "Название альбома", name: "title", widget: "string"}
       - {label: "Фотографии", name: "images", widget: "list", field: {label: "Фото", name: "image", widget: "image"}}
 
-  # ВИДЕО (категории – реализовано через список видео внутри категорий)
+  # ВИДЕО КАТЕГОРИИ (исправленный блок)
   - name: "video_categories"
     label: "Категории видео"
     folder: "content/video_categories"
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Название категории", name: "title", widget: "string"}
-      - {label: "Видео", name: "videos", widget: "list", 
-         fields: 
-           - {label: "Название видео", name: "video_title", widget: "string"}
-           - {label: "Код для вставки (iframe)", name: "embed_code", widget: "text"}
-           - {label: "Описание", name: "description", widget: "text", required: false}
-        }
+      - label: "Название категории"
+        name: "title"
+        widget: "string"
+      - label: "Видео"
+        name: "videos"
+        widget: "list"
+        fields:
+          - label: "Название видео"
+            name: "video_title"
+            widget: "string"
+          - label: "Код для вставки (iframe)"
+            name: "embed_code"
+            widget: "text"
+          - label: "Описание"
+            name: "description"
+            widget: "text"
+            required: false
 
   # КАРТА (общая)
   - name: "map"
@@ -109,7 +121,7 @@ collections:
       - {label: "Фото", name: "image", widget: "image", required: false}
       - {label: "Ссылка на событие", name: "link", widget: "string", required: false}
 
-  # НОВОСТИ (с языком)
+  # НОВОСТИ (RU)
   - name: "news_ru"
     label: "Новости (RU)"
     folder: "content/news/ru"
@@ -120,6 +132,8 @@ collections:
       - {label: "Дата", name: "date", widget: "datetime"}
       - {label: "Текст", name: "body", widget: "markdown"}
       - {label: "Изображение", name: "image", widget: "image", required: false}
+
+  # НОВОСТИ (EN)
   - name: "news_en"
     label: "News (EN)"
     folder: "content/news/en"
@@ -131,7 +145,7 @@ collections:
       - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Image", name: "image", widget: "image", required: false}
 
-  # СТРАНИЦА "О ГРУППЕ" (с языком)
+  # СТРАНИЦА "О ГРУППЕ" (RU)
   - name: "about_ru"
     label: "О группе (RU)"
     folder: "content/about/ru"
@@ -139,6 +153,8 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Текст", name: "body", widget: "markdown"}
+
+  # СТРАНИЦА "О ГРУППЕ" (EN)
   - name: "about_en"
     label: "About (EN)"
     folder: "content/about/en"
