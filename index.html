@@ -117,6 +117,7 @@
         <a href="#members" id="nav-members">Участники</a>
         <a href="#gallery" id="nav-gallery">Галерея</a>
         <a href="#video" id="nav-video">Видео</a>
+        <a href="#news" id="nav-news">Новости</a>
         <a href="#shop" id="nav-shop">Мерч</a>
         <a href="#map-section" id="nav-map">Карта</a>
         <a href="#contacts" id="nav-contacts">Контакты</a>
@@ -138,6 +139,12 @@
 <section id="gallery"><h2 id="gallery-title">Галерея</h2><div id="gallery-albums-container" class="gallery-albums"></div><div id="galleryGrid" class="gallery-grid"></div></section>
 <div id="lightbox" class="lightbox"><span class="lightbox-close">&times;</span><span class="lightbox-prev">&#10094;</span><span class="lightbox-next">&#10095;</span><img id="lightboxImg" class="lightbox-img"></div>
 <section id="video"><h2 id="video-title">Видео</h2><div id="video-categories-container"></div></section>
+    <section id="news">
+    <h2 id="news-title">Новости</h2>
+    <div id="news-container" class="news-container">
+        <p>Загрузка новостей...</p>
+    </div>
+</section>
 <section id="shop"><h2 id="shop-title">Панк-мерч</h2><div id="merch-grid" class="merch-grid"></div></section>
 <section id="map-section"><h2 id="map-title">Карта выступлений</h2><div id="concert-map"></div></section>
 <footer id="contacts"><p>© 2026, группа «Гвоздодёр». <br> Соцсети: <a href="https://vk.com/gvozdoder_punk">VK</a> | <a href="https://t.me/gvozdoder_punk_band">Telegram</a></p></footer>
@@ -194,6 +201,18 @@
             bot_q_concert:"Next gig?", bot_q_tickets:"Buy tickets?", bot_q_music:"Listen to music?",
             bot_q_members:"Band lineup?", bot_q_fanclub:"Join fan club", bot_placeholder:"Type your question...", bot_send:"Ask"
         }
+        ru: {
+    // ... остальные поля
+    nav_news: "Новости",
+    news_title: "Новости",
+    // ...
+},
+en: {
+    // ...
+    nav_news: "News",
+    news_title: "News",
+    // ...
+}
     };
     function applyStaticTranslations() {
     const t = translations[currentLang];
@@ -213,6 +232,8 @@
     if (document.getElementById('gigs-title')) document.getElementById('gigs-title').innerText = t.gigs_title;
     if (document.getElementById('gallery-title')) document.getElementById('gallery-title').innerText = t.gallery_title;
     if (document.getElementById('video-title')) document.getElementById('video-title').innerText = t.video_title;
+        if (document.getElementById('nav-news')) document.getElementById('nav-news').innerText = t.nav_news;
+if (document.getElementById('news-title')) document.getElementById('news-title').innerText = t.news_title;
     if (document.getElementById('shop-title')) document.getElementById('shop-title').innerText = t.shop_title;
     if (document.getElementById('map-title')) document.getElementById('map-title').innerText = t.map_title;
     
