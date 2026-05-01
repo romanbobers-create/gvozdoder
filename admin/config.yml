@@ -124,17 +124,16 @@ collections:
       - {label: "Album title", name: "title", widget: "string"}
       - {label: "Photos", name: "images", widget: "list", field: {label: "Photo", name: "image", widget: "image"}}
 
-  # ВИДЕО (RU)
- # ВАРИАНТ 1: iframe-код
-- name: "video_ru"
-  label: "Видео (RU)"
-  folder: "content/video/ru"
-  create: true
-  slug: "{{slug}}"
-  fields:
-    - {label: "Название", name: "title", widget: "string"}
-    - {label: "Код для вставки (iframe)", name: "embed_code", widget: "text", hint: "Скопируйте полный iframe из ВК или YouTube"}
-    - {label: "Описание", name: "description", widget: "text", required: false}
+  # ВИДЕО (RU) – используем embed_code
+  - name: "video_ru"
+    label: "Видео (RU)"
+    folder: "content/video/ru"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Код для вставки (iframe)", name: "embed_code", widget: "text", hint: "Скопируйте полный iframe из ВК или YouTube"}
+      - {label: "Описание", name: "description", widget: "text", required: false}
   # ВИДЕО (EN)
   - name: "video_en"
     label: "Video (EN)"
@@ -143,7 +142,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "URL (YouTube/VK)", name: "url", widget: "string"}
+      - {label: "Embed code (iframe)", name: "embed_code", widget: "text", hint: "Copy full iframe from VK or YouTube"}
       - {label: "Description", name: "description", widget: "text", required: false}
 
   # КАРТА (RU)
@@ -154,8 +153,8 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Название места", name: "title", widget: "string"}
-      - {label: "Широта", name: "lat", widget: "number", valueType: "float"}
-      - {label: "Долгота", name: "lng", widget: "number", valueType: "float"}
+      - {label: "Широта", name: "lat", widget: "number", value_type: "float"}
+      - {label: "Долгота", name: "lng", widget: "number", value_type: "float"}
       - {label: "Дата", name: "date", widget: "datetime"}
       - {label: "Описание", name: "description", widget: "text"}
       - {label: "Фото (опционально)", name: "image", widget: "image", required: false}
@@ -168,8 +167,8 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Place name", name: "title", widget: "string"}
-      - {label: "Latitude", name: "lat", widget: "number", valueType: "float"}
-      - {label: "Longitude", name: "lng", widget: "number", valueType: "float"}
+      - {label: "Latitude", name: "lat", widget: "number", value_type: "float"}
+      - {label: "Longitude", name: "lng", widget: "number", value_type: "float"}
       - {label: "Date", name: "date", widget: "datetime"}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Photo (optional)", name: "image", widget: "image", required: false}
