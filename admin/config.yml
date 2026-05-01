@@ -11,18 +11,19 @@ public_folder: "/uploads"
 collections:
   # МУЗЫКА (общая)
   - name: "music"
-  label: "Музыка"
-  folder: "content/music"
-  create: true
-  slug: "{{slug}}"
-  media_folder: "uploads/music"      # папка для аудиофайлов (относительно корня репозитория)
-  public_folder: "/uploads/music"    # публичный URL
-  fields:
-    - {label: "Название трека", name: "title", widget: "string"}
-    - {label: "Аудиофайл", name: "audio", widget: "file", media_library: { config: { max_file_size: 10485760 } }}
-    - {label: "Обложка", name: "cover", widget: "image", required: false}
-    - {label: "Альбом", name: "album", widget: "string", required: false}
-    - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
+    label: "Музыка"
+    folder: "content/music"
+    create: true
+    slug: "{{slug}}"
+    media_folder: "uploads/music"
+    public_folder: "/uploads/music"
+    fields:
+      - {label: "Название трека", name: "title", widget: "string"}
+      - {label: "Аудиофайл", name: "audio", widget: "file", choose_url: true, media_library: { config: { max_file_size: 10485760 } }}
+      - {label: "Обложка", name: "cover", widget: "image", required: false}
+      - {label: "Альбом", name: "album", widget: "string", required: false}
+      - {label: "Текст песни", name: "lyrics", widget: "markdown", required: false}
+
   # КОНЦЕРТЫ (общие)
   - name: "gigs"
     label: "Концерты"
@@ -82,7 +83,7 @@ collections:
       - {label: "Название альбома", name: "title", widget: "string"}
       - {label: "Фотографии", name: "images", widget: "list", field: {label: "Фото", name: "image", widget: "image"}}
 
-  # ВИДЕО КАТЕГОРИИ (исправленный блок)
+  # ВИДЕО КАТЕГОРИИ
   - name: "video_categories"
     label: "Категории видео"
     folder: "content/video_categories"
