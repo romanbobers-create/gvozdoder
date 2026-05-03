@@ -28,14 +28,8 @@
         .punk-bot-input input:focus { outline: none; border-color: white; }
         .punk-bot-input button { background: #ff3366; border: none; color: black; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
         .punk-bot-input button:hover { background: white; color: #ff3366; }
-        .chat-button { position: fixed; bottom: 30px; right: 120px; width: 70px; height: 70px; background: #ff3366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 0 15px rgba(255,51,102,0.8); transition: 0.3s; z-index: 1000; font-family: monospace; cursor: pointer; }
-        .chat-button:hover { transform: scale(1.1); box-shadow: 0 0 25px #ff3366; }
-        .chat-window { position: fixed; bottom: 120px; right: 120px; width: 320px; height: 450px; background: #111; border: 2px solid #ff3366; border-radius: 20px; display: none; flex-direction: column; z-index: 1001; box-shadow: 0 0 20px rgba(0,0,0,0.8); overflow: hidden; }
-        .chat-header { background: #ff3366; padding: 8px 12px; display: flex; justify-content: space-between; font-weight: bold; color: black; font-size: 1rem; }
-        .chat-header button { background: none; border: none; font-size: 1.2rem; color: black; cursor: pointer; }
-        .chat-header button:hover { color: white; }
-        .chat-iframe { width: 100%; height: calc(100% - 40px); border: none; background: white; }
-        @media (max-width: 700px) { .chat-button { right: 110px; width: 55px; height: 55px; font-size: 1.8rem; } .chat-window { width: 85vw; height: 60vh; right: 5vw; bottom: 100px; } .punk-bot-window { width: 85vw; right: 5vw; } }
+        
+        @media (max-width: 700px) {.punk-bot-window { width: 85vw; right: 5vw; } }
         .gigs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px; }
         .gig-card { width: 300px; background: rgba(0,0,0,0.7); border: 1px solid #ff3366; border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; text-align: center; }
         .gig-card:hover { transform: translateY(-5px); box-shadow: 0 0 15px #ff3366; }
@@ -165,8 +159,7 @@
     <div class="punk-bot-input"><input type="text" id="botQuestionInput" placeholder="Напиши свой вопрос..."><button id="sendBotQuestion">Спросить</button></div>
 </div>
 
-<div id="chatButton" class="chat-button">💬</div>
-<div id="chatWindow" class="chat-window"><div class="chat-header"><span>💬 Общий чат</span><button id="closeChatBtn">✖</button></div><iframe class="chat-iframe" src="https://tlk.io/embed/gvozdoder"></iframe></div>
+
 
 <script>
     // ======================== КОНФИГУРАЦИЯ ========================
@@ -570,8 +563,7 @@
     document.getElementById('sendBotQuestion').onclick = () => { const inp = document.getElementById('botQuestionInput'); handleUserQuestion(inp.value); inp.value = ''; };
     document.getElementById('botQuestionInput').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('sendBotQuestion').click(); });
     document.querySelectorAll('#botQuickQuestions button').forEach(btn => { btn.onclick = () => handleUserQuestion(btn.getAttribute('data-question')); });
-    document.getElementById('chatButton').onclick = () => document.getElementById('chatWindow').style.display = 'flex';
-    document.getElementById('closeChatBtn').onclick = () => document.getElementById('chatWindow').style.display = 'none';
+    
 
     // ======================== ЗАПУСК ========================
     window.addEventListener('DOMContentLoaded', async () => {
