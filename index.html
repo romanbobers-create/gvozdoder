@@ -433,33 +433,66 @@
     }
 
     // Галерея
-    let galleryAlbums = [], currentGalleryAlbumIdx = 0, currentGalleryPhotoIdx = 0;
-    function renderGallery(albums) {
-        galleryAlbums = albums;
-        const container = document.getElementById('gallery-albums-container');
-        if (!container) return;
-        container.innerHTML = '';
-        if (!albums.length) { document.getElementById('galleryGrid').innerHTML = '<p>Нет фотоальбомов.</p>'; return; }
-        albums.forEach((album, idx) => {
-            const btn = document.createElement('button'); btn.innerText = album.title; btn.classList.add('album-btn');
-            if (idx === currentGalleryAlbumIdx) btn.classList.add('active');
-            btn.onclick = () => { currentGalleryAlbumIdx = idx; currentGalleryPhotoIdx = 0; renderGalleryPhotos(); updateActive(); };
-            container.appendChild(btn);
-        });
-        function updateActive() { document.querySelectorAll('#gallery-albums-container .album-btn').forEach((b,i)=>i===currentGalleryAlbumIdx?b.classList.add('active'):b.classList.remove('active')); }
-        renderGalleryPhotos();
-        function renderGalleryPhotos() {
-            const grid = document.getElementById('galleryGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            const album = galleryAlbums[currentGalleryAlbumIdx];
-            if (!album || !album.images || !album.images.length) { grid.innerHTML = '<p>Нет фотографий.</p>'; return; }
-            album.images.forEach((src, idx) => {
-                const img = document.createElement('img'); img.src = src; img.alt = album.title;
-                img.onclick = () => { currentGalleryPhotoIdx = idx; openLightbox(); };
-                grid.appendChild(img);
-            });
-        }
+    let galleryAlbums = [];
+let currentGalleryAlbumIdx = null;  // теперь null – альбом не выбран
+
+function renderGallery(albums) {
+    galleryAlbums = albums;
+    const container = document.getElementById('gallery-albums-container');
+    const grid = document.getElementById('galleryGrid');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    // Очищаем сетку и показываем сообщение, что альбом не выбран
+    if (grid) grid.innerHTML = '<p>Выберите альбом, чтобы увидеть фотографии.</p>';
+    
+    if (!albums.length) {
+        if (grid) grid.innerHTML = '<p>Нет фотоальбомов.</p>';
+        return;
+    }
+    
+    albums.forEach((album, idx) => {
+        const btn = document.createElement('button');
+        btn.innerText = album.title;
+        btn.classList.add('album-btn');
+        // Не подсвечиваем активную кнопку, пока альбом не выбран
+        btn.onclick = () => {
+            // Снимаем активный класс со всех кнопок
+            document.querySelectorAll('#gallery-albums-container .album-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentGalleryAlbumIdx = idx;
+            currentGalleryPhotoIdx = 0;
+            renderGalleryPhotos();
+        };
+        container.appendChild(btn);
+    });
+}
+
+function renderGalleryPhotos() {
+    const grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+    // Если альбом не выбран (null) – показываем сообщение
+    if (currentGalleryAlbumIdx === null) {
+        grid.innerHTML = '<p>Выберите альбом, чтобы увидеть фотографии.</p>';
+        return;
+    }
+    const album = galleryAlbums[currentGalleryAlbumIdx];
+    if (!album || !album.images || !album.images.length) {
+        grid.innerHTML = '<p>Нет фотографий в этом альбоме.</p>';
+        return;
+    }
+    grid.innerHTML = '';
+    album.images.forEach((src, idx) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = album.title;
+        img.onclick = () => {
+            currentGalleryPhotoIdx = idx;
+            openLightbox();
+        };
+        grid.appendChild(img);
+    });
+}
         function openLightbox() { const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImg'); if (!lb || !lbImg) return; lbImg.src = galleryAlbums[currentGalleryAlbumIdx].images[currentGalleryPhotoIdx]; lb.style.display = 'flex'; }
         function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
         function nextPhoto() { const album = galleryAlbums[currentGalleryAlbumIdx]; if (!album) return; currentGalleryPhotoIdx = (currentGalleryPhotoIdx+1)%album.images.length; document.getElementById('lightboxImg').src = album.images[currentGalleryPhotoIdx]; }
